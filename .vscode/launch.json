@@ -5,19 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Run Part 1",
+            "name": "Python: Day 4",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Python: Run Part 2",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "args": ["2"],
-            "console": "integratedTerminal"
+            "module": "advent2021.day4",
+            "args": ["--input", "tests/day4.txt"]
         }
     ]
 }
