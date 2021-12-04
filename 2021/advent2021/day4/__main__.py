@@ -1,7 +1,7 @@
 from argparse import ArgumentError
 import sys
 import typing
-from advent2021.core import parse_arguments
+from advent2021.core import run
 
 class BingoCard:
     ROW_COUNT = 5
@@ -67,7 +67,7 @@ class BingoCard:
             board_str += " ".join(["{0:02d}".format(col) if col is not None else "--" for col in row]) + "\n"
         return board_str.strip()
 
-def run_part1(file: typing.TextIO) -> None:
+def run_part1(file: typing.TextIO) -> int:
     # The first line contains the number called out for the game of Bingo.
     bingo_numbers = __parse_bingo_numbers(file)
 
@@ -91,12 +91,13 @@ def run_part1(file: typing.TextIO) -> None:
 
     # Now that we've gotten our winning card, figure out the score (i.e., the sum of the unmarked
     # numbers on the board multiplied by the winning number)
-    print(winning_card.sum() * winning_number)
     print("Winning Number: ", winning_number, file=sys.stderr)
     print("Winning Board:", file=sys.stderr)
     print(winning_card, file=sys.stderr)
 
-def run_part2(file: typing.TextIO) -> None:
+    return winning_card.sum() * winning_number
+
+def run_part2(file: typing.TextIO) -> int:
     # The first line contains the number called out for the game of Bingo.
     bingo_numbers = __parse_bingo_numbers(file)
 
@@ -120,12 +121,11 @@ def run_part2(file: typing.TextIO) -> None:
 
     # Now that we've gotten our winning (losing) card, figure out the score (i.e., the sum of the
     # unmarked numbers on the board multiplied by the winning number)
-    print(last_winning_card.sum() * last_winning_number)
     print("(Last) Winning Number: ", last_winning_number, file=sys.stderr)
     print("(Last) Winning Board:", file=sys.stderr)
     print(last_winning_card, file=sys.stderr)
 
-    pass
+    return last_winning_card.sum() * last_winning_number
 
 def __parse_bingo_numbers(file: typing.TextIO) -> typing.List[int]:
     return [int(x) for x in file.readline().strip().split(",")]
@@ -150,4 +150,4 @@ def __parse_bingo_cards(file: typing.TextIO) -> typing.List[BingoCard]:
     bingo_cards.append(BingoCard(current_board))
     return bingo_cards
 
-parse_arguments(__package__, __file__, run_part1, run_part2)
+run(__package__, run_part1, run_part2)
