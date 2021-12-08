@@ -9,8 +9,8 @@ repository (i.e., the folder where this `REAMDE.md` resides in :smile:) and that
 
 ```bash
 # Run Day 1, Part 1 solution (using the input file in inputs/day1.txt)
-$ python -m advent2021.day4 --input inputs/day4.txt --part 1
+$ python -m advent2021.day1 --input inputs/day1.txt --part 1
 
-# Run Day 2, Part 2 solution (using the input file in inputs/day1.txt)
-$ python -m advent2021.day4 --input inputs/day4.txt --part 2
+# Run Day 2, Part 2 solution (using the input file in inputs/day2.txt)
+$ python -m advent2021.day2 --input inputs/day2.txt --part 2
 ```
