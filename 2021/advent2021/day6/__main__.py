@@ -61,9 +61,14 @@ def run_part2(file: typing.TextIO) -> int:
         for age in range(len(age_buckets) - 1, -1, -1):
             if age <= 7:
                 age_buckets[age] = age_buckets_copy[age + 1]
+
+                # Zero out the number of fishes on the 8th element when we're moving the fishes
+                # whose timer are currently 8 to 7.
                 if age == 7:
                     age_buckets[8] = 0
 
+            # When a fish's timer is at 0, its timer will be resetted back to 6 and a new fish
+            # will spawn (with a timer of 8).
             if age == 0:
                 age_buckets[6] += age_buckets_copy[0]
                 age_buckets[8] += age_buckets_copy[0]
