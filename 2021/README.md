@@ -14,13 +14,17 @@ $ python -m advent2021.day1 --input inputs/day1.txt --part 1
 
 # Run Day 2, Part 2 solution (using the input file in inputs/day2.txt)
 $ python -m advent2021.day2 --input inputs/day2.txt --part 2
+
+# Run Day 3, Part 1 solution (using the input file in inputs/day1.txt, expecting the result 1071734,
+# which the program will print out whether the expected result was calculated or not)
+$ python -m advent2021.day3 --input inputs/day3.txt --part 1 --expected 1071734
 ```
 
 For more information, run `python -m day2021.dayX -h` (`X` being one of the implemented Advent of
-Code 2021 days implemented thus far in this repository :smile:) and you'll get a pretty helpful message,
+Code 2021 days that's in this repository :kissing:) and you'll get a pretty helpful message,
 like so:
 ```
-usage: advent2021.dayX [-h] --input INPUT [--part {1,2}] [--expected EXPECTED]
+usage: advent2021.dayX [-h] --input INPUT [--part {1,2}] [--exgit spected EXPECTED]
 
 options:
   -h, --help           show this help message and exit
