@@ -51,7 +51,7 @@ def run(
         print("The results are in!")
         if isinstance(result, Exception):
             print(Fore.RED + Style.DIM + "[❌] Program Encounterd Error")
-            print(Fore.LIGHTBLUE_EX + "[⏱️] Duration:\t{0:#.3f} seconds".format(duration))
+            print(Fore.LIGHTBLUE_EX + "[⏱] Duration:\t{0:#.3f} seconds".format(duration))
             print(Fore.YELLOW + "[❌] Exception: ")
             traceback.print_exception(type(result), result, result.__traceback__)
         else:
@@ -59,11 +59,11 @@ def run(
             if args.expected is not None and result == args.expected:
                 print(Fore.GREEN + Style.BRIGHT + "[✅] Solution Ran with Expected Result" + Style.RESET_ALL)
             elif args.expected is not None:
-                print(Fore.GREEN + Style.BRIGHT + "[⚠️] Solution Ran with Unexpected Result" + Style.RESET_ALL)
+                print(Fore.YELLOW + Style.BRIGHT + "[⚠️ ] Solution Ran with Unexpected Result" + Style.RESET_ALL)
             else:
                 print(Fore.GREEN + Style.BRIGHT + "[✅] Solution Ran Successfully" + Style.RESET_ALL)
 
-            print(Fore.LIGHTBLUE_EX + "[⏱️] Duration:\t{0:#.3f} seconds".format(duration))
+            print(Fore.LIGHTBLUE_EX + "[⏱ ] Duration:\t{0:#.3f} seconds".format(duration))
             print(Fore.BLUE + "[🤔] Result:\t" + Style.DIM + str(result), Style.RESET_ALL)
 
             if args.expected is not None:
