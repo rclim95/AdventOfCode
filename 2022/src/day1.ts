@@ -1,9 +1,10 @@
-import { readLines } from "io/buffer.ts";
+import { readLinesFromStdin, runSolutions } from "./utils/common.ts";
+
 
 async function solutionOne() {
     let maxCalories = 0;
     let runningCaloriesSum = 0;
-    for await (const line of readLines(Deno.stdin)) {
+    for await (const line of readLinesFromStdin()) {
         if (line.length === 0) {
             // Is this our newest max? If so, store it, because we're interested in the calories
             // carried by the elf that's carrying the most calories here. :)
@@ -27,7 +28,7 @@ async function solutionOne() {
 async function solutionTwo() {
     const topThreeCalories = [0, 0, 0];
     let runningCaloriesSum = 0;
-    for await (const line of readLines(Deno.stdin, )) {
+    for await (const line of readLinesFromStdin()) {
         console.log("Read: \"" + line + "\"");
         if (line.length === 0) {
             // Find the smallest element in the topThreeCalories list, and place the new max there,
@@ -55,23 +56,8 @@ async function solutionTwo() {
         }
     }
 
-    // Don't forget the last element!
-    if (topThreeCalories[0] < runningCaloriesSum) {
-        topThreeCalories[2] = topThreeCalories[1];
-        topThreeCalories[1] = topThreeCalories[0];
-        topThreeCalories[0] = runningCaloriesSum;
-    }
-    else if (topThreeCalories[1] < runningCaloriesSum) {
-        topThreeCalories[2] = topThreeCalories[1];
-        topThreeCalories[1] = runningCaloriesSum;
-    }
-    else if (topThreeCalories[2] < runningCaloriesSum) {
-        topThreeCalories[2] = runningCaloriesSum;
-    }
-
     return topThreeCalories.reduce((previous, current) => previous + current, 0);
 }
 
 
-console.log("Solution 1:", await solutionOne());
-console.log("Solution 2:", await solutionTwo());
+await runSolutions(solutionOne, solutionTwo);
