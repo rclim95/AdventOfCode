@@ -1,4 +1,5 @@
-import { readLines } from "io/buffer.ts";
+import { BufReader } from "io/buffer.ts";
+import { EOL } from "fs/eol.ts";
 import { parse } from "flags/mod.ts";
 
 type SolutionFuncAsync = () => Promise<string> | Promise<number>;
@@ -32,18 +33,28 @@ export async function runSolutions(solutionOne: SolutionFuncAsync, solutionTwo: 
 
 /**
  * Returns an asychronous iterator that will read each line from `STDIN`.
+ * @param includeNewLineEnding
+ *      Indicate whether the last line, i.e., an empty new line, should be included as part
+ *      of the line reading. The default is `true`. If `false`, it'll be omitted.
  * @returns An iterator that'll go through each line in STDIN.
  */
-export async function* readLinesFromStdin(): AsyncIterableIterator<string> {
-    let lastLineRead = "";
-    for await (const line of readLines(Deno.stdin)) {
-        lastLineRead = line;
-        yield line;
-    }
+export async function* readLinesFromStdin(includeNewLineEnding = true): AsyncIterableIterator<string> {
+    const bufReader = new BufReader(Deno.stdin);
+    while (true) {
+        const line = await bufReader.readString(EOL.LF);
 
-    // If the last line read is not an empty string, then assume that the newline at the end of the
-    // file got eaten up.
-    if (lastLineRead !== "") {
-        yield "";
+        // We reached the end of STDIN, so stop.
+        if (line === null) {
+            return;
+        }
+
+        // Do we need to return the "new line" ending, typically represented with an empty line?
+        const nextByte = await bufReader.peek(1);
+        if (nextByte === null && !includeNewLineEnding) {
+            return;
+        }
+
+        // Otherwise, keep on returning the current line.
+        yield line.trim();
     }
 }

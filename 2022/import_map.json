@@ -1,6 +1,8 @@
 {
     "imports": {
+        "fs/": "https://deno.land/std@0.167.0/fs/",
         "io/": "https://deno.land/std@0.167.0/io/",
-        "flags/": "https://deno.land/std@0.167.0/flags/"
+        "flags/": "https://deno.land/std@0.167.0/flags/",
+        "streams/": "https://deno.land/std@0.167.0/streams/"
     }
 }
