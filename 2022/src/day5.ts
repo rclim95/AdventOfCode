@@ -118,7 +118,6 @@ async function solutionOne() {
     // Parse our crate stacks to get the initial position.
     const stdin = readLinesFromStdin();
     const stacks = await readCrateStacks(stdin);
-    console.log(stacks);
     
     // Now that we've done that, let's figure out the rearrangement procedure. :)
     while (true) {
@@ -161,48 +160,47 @@ async function solutionOne() {
 }
 
 async function solutionTwo() {
-// Parse our crate stacks to get the initial position.
-const stdin = readLinesFromStdin(true, false);
-const stacks = await readCrateStacks(stdin);
-console.log(stacks);
+    // Parse our crate stacks to get the initial position.
+    const stdin = readLinesFromStdin(true, false);
+    const stacks = await readCrateStacks(stdin);
 
-// Now that we've done that, let's figure out the rearrangement procedure. :)
-while (true) {
-    const it = await stdin.next();
-    if (it.done || it.value === null) {
-        break;
+    // Now that we've done that, let's figure out the rearrangement procedure. :)
+    while (true) {
+        const it = await stdin.next();
+        if (it.done || it.value === null) {
+            break;
+        }
+
+        // We're expecting the rearrangement procedure to match this regualr expression:
+        const line = it.value;
+        const result = line.match(/move (?<count>\d+) from (?<srcStack>\d+) to (?<dstStack>\d+)/);
+        if (result === null) {
+            // Not a valid rearrangement text--skip.
+            continue;
+        }
+
+        const count = parseInt(result.groups?.count ?? "-1");
+        const sourceStack = parseInt(result.groups?.srcStack ?? "-1");
+        const destinationStack = parseInt(result.groups?.dstStack ?? "-1");
+
+        // Make sure all of the following are valid. Otherwise, skip!
+        if (count === -1 || sourceStack === -1 || destinationStack === -1) {
+            continue;
+        }
+
+        // From the soruce stack, pop off the top crates (of the speciifed count, as the CrateMover 9001
+        // actually supports moving multiple crates at once and not one-by-one like Solution 1), and 
+        // move them to the destination stack.
+        //
+        // Note that we need to subtract one, since sourceStack and destinationStack are 1-based.
+        const cratesToMove = stacks[sourceStack - 1].pop(count);
+        if (cratesToMove !== null) {
+            stacks[destinationStack - 1].push(cratesToMove);
+        }
     }
 
-    // We're expecting the rearrangement procedure to match this regualr expression:
-    const line = it.value;
-    const result = line.match(/move (?<count>\d+) from (?<srcStack>\d+) to (?<dstStack>\d+)/);
-    if (result === null) {
-        // Not a valid rearrangement text--skip.
-        continue;
-    }
-
-    const count = parseInt(result.groups?.count ?? "-1");
-    const sourceStack = parseInt(result.groups?.srcStack ?? "-1");
-    const destinationStack = parseInt(result.groups?.dstStack ?? "-1");
-
-    // Make sure all of the following are valid. Otherwise, skip!
-    if (count === -1 || sourceStack === -1 || destinationStack === -1) {
-        continue;
-    }
-
-    // From the soruce stack, pop off the top crates (of the speciifed count, as the CrateMover 9001
-    // actually supports moving multiple crates at once and not one-by-one like Solution 1), and 
-    // move them to the destination stack.
-    //
-    // Note that we need to subtract one, since sourceStack and destinationStack are 1-based.
-    const cratesToMove = stacks[sourceStack - 1].pop(count);
-    if (cratesToMove !== null) {
-        stacks[destinationStack - 1].push(cratesToMove);
-    }
-}
-
-// Now peek at the top of the stack and return the crates up top.
-return stacks.map(s => s.peek()).join("");
+    // Now peek at the top of the stack and return the crates up top.
+    return stacks.map(s => s.peek()).join("");
 }
 
 runSolutions(solutionOne, solutionTwo);
