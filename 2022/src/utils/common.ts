@@ -36,9 +36,12 @@ export async function runSolutions(solutionOne: SolutionFuncAsync, solutionTwo: 
  * @param includeNewLineEnding
  *      Indicate whether the last line, i.e., an empty new line, should be included as part
  *      of the line reading. The default is `true`. If `false`, it'll be omitted.
+ * @param autoTrimLine
+ *      Indicate whether the line should be trimmed before of whitespaces before returning.
+ *      THe default is `true`. If `false`, whitespaces and newlines will be included.
  * @returns An iterator that'll go through each line in STDIN.
  */
-export async function* readLinesFromStdin(includeNewLineEnding = true): AsyncIterableIterator<string> {
+export async function* readLinesFromStdin(includeNewLineEnding = true, autoTrimLine = true): AsyncIterableIterator<string> {
     const bufReader = new BufReader(Deno.stdin);
     while (true) {
         const line = await bufReader.readString(EOL.LF);
@@ -55,6 +58,11 @@ export async function* readLinesFromStdin(includeNewLineEnding = true): AsyncIte
         }
 
         // Otherwise, keep on returning the current line.
-        yield line.trim();
+        if (autoTrimLine) {
+            yield line.trim();
+        }
+        else {
+            yield line;
+        }
     }
 }
