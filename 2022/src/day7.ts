@@ -159,7 +159,7 @@ function printFolderStructure(root: Folder, level = 0): string {
     return output;
 }
 
-async function buildFileSystem() {
+async function buildRootHierarchy() {
     const root = new Folder("/");
     let currentFolder: Folder | null = root;
     let parsingLsOutput = false;
@@ -225,15 +225,16 @@ async function buildFileSystem() {
 }
 
 async function sumOfLargeDirectories() {
+    const MinimumFolderSize = 100_000.
+
     // Read in our file system based off our terminal inputs, and print out the structure for fun.
-    const rootFolder = await buildFileSystem();
+    const rootFolder = await buildRootHierarchy();
     console.debug(printFolderStructure(rootFolder));
 
-    // Now go through the tree and collect all the directories whose sizes are greater than 100,000.
-    // To iterate through the tree, we'll do a depth-first search in an iterative form.
+    // Now go through the tree and sum all the directories whose sizes are greater than 100,000.
     const sumApplicableFolder = (root: Folder): number => {
         let sum = 0;
-        if (root.size <= 100000) {
+        if (root.size <= MinimumFolderSize) {
             sum += root.size;
         }
 
@@ -251,7 +252,7 @@ async function sizeOfSmallestDirectoryToDelete() {
     const FreeSpaceRequired = 30_000_000;
 
     // Read in our file system based off our terminal inputs, and print out the structure for fun.
-    const rootFolder = await buildFileSystem();
+    const rootFolder = await buildRootHierarchy();
     const availableFreeSpace = TotalDiskSpace - rootFolder.size;
     const freeSpaceNeeded = FreeSpaceRequired - availableFreeSpace;
     console.debug(printFolderStructure(rootFolder));
