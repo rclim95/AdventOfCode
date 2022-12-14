@@ -13,30 +13,38 @@ enum Direction {
  * a space apart or the head is on top of its tail).
  */
 class Rope {
-    private _headPosition: [number, number];
-    private _tailPosition: [number, number];
+    private _knotPositions: Array<[number, number]>;
 
     /**
      * Constructor.
      * @param initialPosition The initial position of the rope.
+     * @param numberOfKnots The number of knots, including the head and tail. A minimum of two
+     *  knots are required.
      */
-    constructor(initialPosition: [number, number]) {
-        this._headPosition = [initialPosition[0], initialPosition[1]];
-        this._tailPosition = [initialPosition[0], initialPosition[1]];
+    constructor(initialPosition: [number, number], numberOfKnots = 2) {
+        if (numberOfKnots < 2) {
+            throw new RangeError("The number of knots must be 2 or greater.");
+        }
+
+        // Initialize the stack of knots to the initial position.
+        this._knotPositions = [];
+        for (let i = 0; i < numberOfKnots; i++) {
+            this._knotPositions.push([initialPosition[0], initialPosition[1]]);
+        }
     }
 
     /**
      * Gets the current position of the head of the rope.
      */
     public get headCurrentPosition() {
-        return this._headPosition;
+        return this._knotPositions[0];
     }
 
     /**
-     * Gets the current position of the head of the rope.
+     * Gets the current position of the tail of the rope.
      */
     public get tailCurrentPosition() {
-        return this._tailPosition;
+        return this._knotPositions[this._knotPositions.length - 1];
     }
 
     /**
@@ -79,90 +87,70 @@ class Rope {
         // NB: Set doesn't work with array, because array comparison are done by reference. Therefore,
         // we need to store our tail positions as strings instead.
         const tailPositions = new Array<[number, number]>();
-        switch (direction) {
-            case Direction.Horizontal: {
-                // We're moving left (-1) or right (+1).
-                const stepDirection = offset < 0 ? -1 : 1;
-                const start = this._headPosition[0];
-                const stop = this._headPosition[0] + offset + stepDirection;
-                for (let i = start; i !== stop; i += stepDirection) {
-                    // Move in that direction. :)
-                    this._headPosition[0] = i;
 
-                    // Now evaluate: is our tail near our head?
-                    if (!this.isTailNearHead()) {
-                        // It isn't! D: Help the tail get close to its head.
-                        const [horizDiff, vertDiff] = this.distanceBetweenHeadAndTail();
+        // Figure out where the head is supposed to go...
+        const positionIndex = direction == Direction.Horizontal ? 0 : 1;
+        const stepDirection = offset < 0 ? -1 : 1;
+        const start = this.headCurrentPosition[positionIndex];
+        const end = start + offset + stepDirection;
+        for (let i = start; i !== end; i += stepDirection) {
+            // ...and move the head there. :)
+            this.headCurrentPosition[positionIndex] = i;
 
-                        // If the head and tail are not on the same row, then move the tail
-                        // diagonally in the proper direction so that it's near.
-                        if (vertDiff !== 0) {
-                            this._tailPosition[1] += vertDiff;
-                        }
-                        
-                        this._tailPosition[0] += horizDiff - stepDirection;
-                        tailPositions.push([this._tailPosition[0], this._tailPosition[1]]);
+            // Now go through the remaining knots and make sure that the knot that it's adjacent
+            // to is nearby, i.e., within 1 unit diagonally or adjacent.
+            for (let j = 0; j < this._knotPositions.length - 1; j++) {
+                const [horizDiff, vertDiff] = this.distanceBetweenKnots(j, j + 1);
+
+                if (Math.abs(horizDiff) < 2 && Math.abs(vertDiff) < 2) {
+                    // They're pretty close to each other, so no need to do anything.
+                    continue;
+                }
+                
+                // Do we need to move the adjacent knot diagonally?
+                if (Math.abs(horizDiff) > 1 && Math.abs(vertDiff) !== 0 ||
+                    Math.abs(vertDiff) > 1 && Math.abs(horizDiff) !== 0) {
+                    this._knotPositions[j + 1][0] += Math.sign(horizDiff);
+                    this._knotPositions[j + 1][1] += Math.sign(vertDiff);
+                }
+                else {
+                    // Follow along in which ever direction the knot should go with respect
+                    // to its adjacent knot.
+                    if (horizDiff === 0) {
+                        this._knotPositions[j + 1][1] += Math.sign(vertDiff);
+                    }
+                    else if (vertDiff === 0) {
+                        this._knotPositions[j + 1][0] += Math.sign(horizDiff);
                     }
                 }
-                break;
             }
-            
-            case Direction.Vertical: {
-                // We're moving up (-1) or down (+1).
-                const stepDirection = offset < 0 ? -1 : 1;
-                const start = this._headPosition[1];
-                const stop = this._headPosition[1] + offset + stepDirection;
-                for (let i = start; i !== stop; i += stepDirection) {
-                    // Move in that direction. :)
-                    this._headPosition[1] = i;
 
-                    // Now evaluate: is our tail near our head?
-                    if (!this.isTailNearHead()) {
-                        // It isn't! D: Help the tail get close to its head.
-                        const [horizDiff, vertDiff] = this.distanceBetweenHeadAndTail();
-
-                        // If the head and tail are not on the same column, then move the tail
-                        // diagonally in the proper direction so that it's near.
-                        if (horizDiff !== 0) {
-                            this._tailPosition[0] += horizDiff;
-                        }
-                        this._tailPosition[1] += vertDiff - stepDirection;
-                        tailPositions.push([this._tailPosition[0], this._tailPosition[1]]);
-                    }
-                    
-                    
-                }
-                break;
+            // Add the tail position, if it changed.
+            const lastIndex = tailPositions.length - 1;
+            if (tailPositions.length === 0 ||
+                tailPositions[lastIndex][0] !== this.tailCurrentPosition[0] ||
+                tailPositions[lastIndex][1] !== this.tailCurrentPosition[1]) {
+                tailPositions.push([this.tailCurrentPosition[0], this.tailCurrentPosition[1]]);
             }
         }
 
         return tailPositions;
     }
 
-    private distanceBetweenHeadAndTail(): [number, number] {
+    private distanceBetweenKnots(knotIndex: number, otherKnotIndex: number): [number, number] {
         return [
-            this._headPosition[0] - this._tailPosition[0],
-            this._headPosition[1] - this._tailPosition[1]
+            this._knotPositions[knotIndex][0] - this._knotPositions[otherKnotIndex][0],
+            this._knotPositions[knotIndex][1] - this._knotPositions[otherKnotIndex][1]
         ];
-    }
-
-    private isTailNearHead(): boolean {
-        // Find the difference between the X and Y coordinate of the head and tail. If we're within
-        // one (or even zero, indicating overlaps), we're good! :D
-        const distance = this.distanceBetweenHeadAndTail();
-        console.log(distance);
-        const horizDiff = Math.abs(distance[0]);
-        const vertDiff = Math.abs(distance[1]);
-
-        return horizDiff < 2 && vertDiff < 2;
     }
 }
 
 
 /**
  * Counts the number of unique positions the `T` (tail) of the rope have visited at least once.
+ * @param numberOfKnots The number of knots, including the head and tail. Minimum is `2`.
  */
-async function countUniquePositionsOfTail() {
+async function countUniquePositionsOfTail(numberOfKnots: number) {
     // NB: Because arrays are compared by reference, we can't use a Set<[number, number]> here,
     // because equality comparison to determine whether a list is "unique" will be reference-based,
     // i.e., exists in the same "memory location," than value-based, i.e., checking to see if the
@@ -175,7 +163,7 @@ async function countUniquePositionsOfTail() {
     tailPositions.add(currentPosition.join(","));
 
     // Now read our movement script.
-    const rope = new Rope(currentPosition);
+    const rope = new Rope(currentPosition, numberOfKnots);
     for await (const line of readLinesFromStdin(false)) {
         // The line is composed of two tokens, delimited by a space. The first token represents
         // the direction ("U", "D", "L", "R") and the second token represents the number of moves
@@ -208,8 +196,7 @@ async function countUniquePositionsOfTail() {
     return tailPositions.size;
 }
 
-async function solutionTwo() {
-    return "";
-}
-
-runSolutions(countUniquePositionsOfTail, solutionTwo);
+runSolutions(
+    async () => await countUniquePositionsOfTail(2),
+    async () => await countUniquePositionsOfTail(10)
+);
