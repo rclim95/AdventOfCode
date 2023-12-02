@@ -12,4 +12,9 @@
     <PackageReference Include="Spectre.Console.Cli" Version="0.48.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Inputs\Examples\" />
+    <Folder Include="Inputs\Tests\" />
+  </ItemGroup>
+
 </Project>

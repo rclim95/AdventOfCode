@@ -30,6 +30,8 @@ namespace AdventOfCode.Problems
         public PuzzleRunner()
         {
             _puzzles = new List<PuzzleRecord>();
+
+            RegisterPuzzle<Day1>();
         }
 
         /// <summary>
