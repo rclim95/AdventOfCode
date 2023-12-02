@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode.Problems.Days
 {
-    internal class Day1 : IPuzzle
+    internal sealed class Day1 : IPuzzle
     {
         /// <inheritdoc />
         public static int Day => 1;

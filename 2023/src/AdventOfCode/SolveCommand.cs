@@ -14,7 +14,7 @@ namespace AdventOfCode
     /// <summary>
     /// Provides a command for solving an Advent of Code problem.
     /// </summary>
-    internal class SolveCommand : Command<SolveCommand.Settings>
+    internal sealed class SolveCommand : Command<SolveCommand.Settings>
     {
         public override int Execute(CommandContext context, Settings settings)
         {

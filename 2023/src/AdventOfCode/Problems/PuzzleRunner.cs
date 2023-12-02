@@ -20,7 +20,7 @@ namespace AdventOfCode.Problems
     /// <summary>
     /// Provide a class responsible for running a <see cref="IPuzzle" /> class.
     /// </summary>
-    internal class PuzzleRunner
+    internal sealed class PuzzleRunner
     {
         private List<PuzzleRecord> _puzzles;
 
