@@ -1,10 +1,14 @@
-﻿namespace AdventOfCode
+﻿using AdventOfCode.Problems;
+using Spectre.Console.Cli;
+
+namespace AdventOfCode
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            var app = new CommandApp<SolveCommand>();
+            app.Run(args);
         }
     }
 }
