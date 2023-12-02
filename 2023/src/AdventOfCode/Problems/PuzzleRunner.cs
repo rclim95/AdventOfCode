@@ -32,6 +32,7 @@ namespace AdventOfCode.Problems
             _puzzles = new List<PuzzleRecord>();
 
             RegisterPuzzle<Day1>();
+            RegisterPuzzle<Day2>();
         }
 
         /// <summary>

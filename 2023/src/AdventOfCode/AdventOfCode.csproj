@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Inputs\Examples\" />
     <Folder Include="Inputs\Tests\" />
   </ItemGroup>
 
