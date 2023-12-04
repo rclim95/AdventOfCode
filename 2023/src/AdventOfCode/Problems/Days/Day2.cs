@@ -12,7 +12,7 @@ namespace AdventOfCode.Problems.Days
         public static int Day => 2;
 
         /// <inheritdoc />
-        public static string GetAnswerForProblem1(TextReader reader)
+        public static string GetPart1Answer(TextReader reader)
         {
             const int MaximumRedCube = 12;
             const int MaximumGreenCube = 13;
@@ -46,7 +46,7 @@ namespace AdventOfCode.Problems.Days
         }
 
         /// <inheritdoc />
-        public static string GetAnswerForProblem2(TextReader reader)
+        public static string GetPart2Answer(TextReader reader)
         {
             int sumOfPowers = 0;
             foreach (var game in GetGames(reader))

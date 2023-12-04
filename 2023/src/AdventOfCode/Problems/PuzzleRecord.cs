@@ -10,7 +10,7 @@ namespace AdventOfCode.Problems
     /// Encapsulates information about an Advent of Code puzzle.
     /// </summary>
     /// <param name="Day">The day that this puzzle is for.</param>
-    /// <param name="Problem1">The function that will return the solution to the first problem of the puzzle.</param>
-    /// <param name="Problem2">The function that will return the solution to the second problem of the puzzle.</param>
-    internal sealed record class PuzzleRecord(int Day, Func<TextReader, string> Problem1, Func<TextReader, string> Problem2);
+    /// <param name="Part1">The function that will return the solution to the first part of the puzzle.</param>
+    /// <param name="Part2">The function that will return the solution to the second part of the puzzle.</param>
+    internal sealed record class PuzzleRecord(int Day, Func<TextReader, string> Part1, Func<TextReader, string> Part2);
 }

@@ -80,8 +80,8 @@ namespace AdventOfCode
                 Day = day,
                 Problem = problem switch
                 {
-                    "Problem 1" => PuzzleProblem.Problem1,
-                    "Problem 2" => PuzzleProblem.Problem2,
+                    "Problem 1" => PuzzlePart.Part1,
+                    "Problem 2" => PuzzlePart.Part2,
                     _ => throw new NotSupportedException()
                 },
                 File = filePath
@@ -96,7 +96,7 @@ namespace AdventOfCode
 
             [Description("The specific problem of the puzzle to solve (either \"Problem1\" or \"Problem2\"). If omitted, both problems will be outputted.")]
             [CommandArgument(1, "[problem]")]
-            public PuzzleProblem? Problem { get; init; }
+            public PuzzlePart? Problem { get; init; }
 
             [Description("The path to the input file that should be used for solving the puzzle/problem. If omitted, it is assumed that the input will come from STDIN.")]
             [CommandArgument(2, "[input]")]

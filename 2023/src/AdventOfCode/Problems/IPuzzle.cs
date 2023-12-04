@@ -12,22 +12,22 @@ namespace AdventOfCode.Problems
     internal interface IPuzzle
     {
         /// <summary>
-        /// Gets the day that this problem is solving.
+        /// Gets the day that this puzzle is solving.
         /// </summary>
         static abstract int Day { get; }
 
         /// <summary>
-        /// Gets the answer for solving the first problem.
+        /// Gets the answer for solving the first part of the puzzle.
         /// </summary>
-        /// <param name="reader">A handle to the input file that should be used for solving the problem.</param>
-        /// <returns>The answer to the first problem.</returns>
-        static abstract string GetAnswerForProblem1(TextReader reader);
+        /// <param name="reader">A handle to the input file that should be used for solving the part.</param>
+        /// <returns>The answer to the first part.</returns>
+        static abstract string GetPart1Answer(TextReader reader);
 
         /// <summary>
-        /// Gets the answer for solving the second problem.
+        /// Gets the answer for solving the second part of the puzzle.
         /// </summary>
-        /// <param name="reader">A handle to the input file that should be used for solving the problem.</param>
-        /// <returns>The answer to the second problem.</returns>
-        static abstract string GetAnswerForProblem2(TextReader reader);
+        /// <param name="reader">A handle to the input file that should be used for solving the part.</param>
+        /// <returns>The answer to the second part.</returns>
+        static abstract string GetPart2Answer(TextReader reader);
     }
 }

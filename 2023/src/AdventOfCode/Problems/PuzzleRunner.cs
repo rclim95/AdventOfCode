@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 namespace AdventOfCode.Problems
 {
     /// <summary>
-    /// Defines the available problems that can be executed for a puzzle.
+    /// Defines the available parts that can be executed for a puzzle.
     /// </summary>
-    internal enum PuzzleProblem
+    internal enum PuzzlePart
     {
-        Problem1 = 1,
-        Problem2 = 2
+        Part1 = 1,
+        Part2 = 2
     }
 
     /// <summary>
@@ -45,25 +45,25 @@ namespace AdventOfCode.Problems
         /// Solves a problem for a particular day.
         /// </summary>
         /// <param name="day">The particular day.</param>
-        /// <param name="problem">The particular problem.</param>
+        /// <param name="part">The particular problem.</param>
         /// <param name="inputFile">The input file that should be passed to the problem to solve.</param>
-        public void Solve(int day, PuzzleProblem problem, TextReader inputFile)
+        public void Solve(int day, PuzzlePart part, TextReader inputFile)
         {
-            var selectedProblem = _puzzles.FirstOrDefault(p => p.Day == day);
-            if (selectedProblem == null)
+            var selectedPuzzle = _puzzles.FirstOrDefault(p => p.Day == day);
+            if (selectedPuzzle == null)
             {
                 AnsiConsole.MarkupLineInterpolated($"[bold red]ERROR:[/] Day {day} does not exist.");
                 return;
             }
 
-            switch (problem)
+            switch (part)
             {
-                case PuzzleProblem.Problem1:
-                    AnsiConsole.MarkupLineInterpolated($"[bold]Day {day}, Problem 1 Answer:[/] {selectedProblem.Problem1(inputFile)}");
+                case PuzzlePart.Part1:
+                    AnsiConsole.MarkupLineInterpolated($"[bold]Day {day}, Part 1 Answer:[/] {selectedPuzzle.Part1(inputFile)}");
                     break;
 
-                case PuzzleProblem.Problem2:
-                    AnsiConsole.MarkupLineInterpolated($"[bold]Day {day}, Problem 2 Answer:[/] {selectedProblem.Problem2(inputFile)}");
+                case PuzzlePart.Part2:
+                    AnsiConsole.MarkupLineInterpolated($"[bold]Day {day}, Part 2 Answer:[/] {selectedPuzzle.Part2(inputFile)}");
                     break;
             }
         }
@@ -72,8 +72,8 @@ namespace AdventOfCode.Problems
         {
             _puzzles.Add(new PuzzleRecord(
                 TPuzzle.Day,
-                (reader) => TPuzzle.GetAnswerForProblem1(reader),
-                (reader) => TPuzzle.GetAnswerForProblem2(reader)
+                (reader) => TPuzzle.GetPart1Answer(reader),
+                (reader) => TPuzzle.GetPart2Answer(reader)
             ));
         }
     }

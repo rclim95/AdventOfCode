@@ -14,7 +14,7 @@ namespace AdventOfCode.Problems.Days
         public static int Day => 1;
 
         /// <inheritdoc />
-        public static string GetAnswerForProblem1(TextReader reader)
+        public static string GetPart1Answer(TextReader reader)
         {
             int sum = 0;
             while (true)
@@ -39,7 +39,7 @@ namespace AdventOfCode.Problems.Days
         }
 
         /// <inheritdoc />
-        public static string GetAnswerForProblem2(TextReader reader)
+        public static string GetPart2Answer(TextReader reader)
         {
             int sum = 0;
             while (true)
