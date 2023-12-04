@@ -99,24 +99,25 @@ namespace AdventOfCode
                 ));
             if (parts.Contains("Part 1"))
             {
-                partsToRun &= Settings.Parts.Part1;
+                partsToRun |= Settings.Parts.Part1;
             }
             if (parts.Contains("Part 2"))
             {
-                partsToRun &= Settings.Parts.Part2;
+                partsToRun |= Settings.Parts.Part2;
             }
 
             string filePath = string.Empty;
             while (true)
             {
-                filePath = AnsiConsole.Ask<string>("Enter the path to the input file to use.");
+                filePath = AnsiConsole.Ask<string>("Enter the path to the input file to use:");
                 if (File.Exists(filePath))
                 {
                     break;
                 }
 
                 // The file doesn't exist.
-                AnsiConsole.MarkupLine("[bold red]Error:[/] The file at the specified path does not exist.");
+                AnsiConsole.MarkupLineInterpolated(
+                    $"[bold red]Error:[/] The file [bold]{Path.GetFullPath(filePath)}[/] does not exist.");
             }
 
             return new Settings()
