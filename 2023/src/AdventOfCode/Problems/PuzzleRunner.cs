@@ -13,8 +13,8 @@ namespace AdventOfCode.Problems
     /// </summary>
     internal enum PuzzleProblem
     {
-        Problem1,
-        Problem2
+        Problem1 = 1,
+        Problem2 = 2
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ namespace AdventOfCode.Problems
     /// </summary>
     internal sealed class PuzzleRunner
     {
-        private List<PuzzleRecord> _puzzles;
+        private readonly List<PuzzleRecord> _puzzles;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PuzzleRunner" /> class.
@@ -35,6 +35,11 @@ namespace AdventOfCode.Problems
             RegisterPuzzle<Day2>();
             RegisterPuzzle<Day3>();
         }
+
+        /// <summary>
+        /// Gets the available days that the runner supports.
+        /// </summary>
+        public IReadOnlyCollection<int> Days => _puzzles.Select(p => p.Day).ToList();
 
         /// <summary>
         /// Solves a problem for a particular day.
