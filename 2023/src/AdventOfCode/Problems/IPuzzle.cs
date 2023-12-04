@@ -21,13 +21,13 @@ namespace AdventOfCode.Problems
         /// </summary>
         /// <param name="reader">A handle to the input file that should be used for solving the part.</param>
         /// <returns>The answer to the first part.</returns>
-        static abstract string GetPart1Answer(TextReader reader);
+        static abstract string GetPart1Answer(StreamReader reader);
 
         /// <summary>
         /// Gets the answer for solving the second part of the puzzle.
         /// </summary>
         /// <param name="reader">A handle to the input file that should be used for solving the part.</param>
         /// <returns>The answer to the second part.</returns>
-        static abstract string GetPart2Answer(TextReader reader);
+        static abstract string GetPart2Answer(StreamReader reader);
     }
 }

@@ -1,13 +1,8 @@
 ﻿using AdventOfCode.Problems;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode
 {
@@ -36,13 +31,53 @@ namespace AdventOfCode
                 // mode or on the command line args. The command line args will be validated so that
                 // the day, problem, and (input) file are provided if the app isn't running in
                 // interactive mode. :)
-                using TextReader reader = File.OpenText(settings.File!);
-                runner.Solve(settings.Day!.Value, settings.Problem!.Value, reader);
+                using StreamReader reader = File.OpenText(settings.File!);
+                if (settings.Part!.Value.HasFlag(Settings.Parts.Part1))
+                {
+                    try
+                    {
+                        string result = runner.Run(settings.Day!.Value, PuzzlePart.Part1, reader);
+                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 1 Answer: :check_mark:  [bold]{result}[/]");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 1 Answer: :warning:  [bold red]Not Implemented[/]");
+                    }
+                    catch (Exception ex)
+                    {
+                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 1 Answer: :cross_mark: [bold red]Error[/]");
+                        AnsiConsole.WriteException(ex);
+                    }
+                }
+
+                if (settings.Part!.Value.HasFlag(Settings.Parts.Part2))
+                {
+                    // In case part 1 was executed, reset the stream to the beginning so that the
+                    // input file will be read properly.
+                    reader.BaseStream.Position = 0;
+                    reader.DiscardBufferedData();
+
+                    try
+                    {
+                        string result = runner.Run(settings.Day!.Value, PuzzlePart.Part2, reader);
+                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 2 Answer: :check_mark:  [bold]{result}[/]");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 2 Answer: :warning:  [bold red]Not Implemented[/]");
+                    }
+                    catch (Exception ex)
+                    {
+                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 2 Answer: :cross_mark:  [bold red]Error[/]");
+                        AnsiConsole.WriteException(ex);
+                    }
+                }
 
                 return 0;
             }
             catch (Exception ex)
             {
+                AnsiConsole.MarkupLine("[bold red]ERROR:[/] An unhandled exception occurred:");
                 AnsiConsole.WriteException(ex);
 
                 return 1;
@@ -55,12 +90,21 @@ namespace AdventOfCode
                 .Title("Which day would you like to run?")
                 .AddChoices(runner.Days));
 
-            var problem = AnsiConsole.Prompt(new SelectionPrompt<string>()
-                .Title("Which problem would you like to run?")
+            Settings.Parts partsToRun = Settings.Parts.None;
+            var parts = AnsiConsole.Prompt(new MultiSelectionPrompt<string>()
+                .Title("Which part(s) would you like to run?")
                 .AddChoices(
-                    "Problem 1",
-                    "Problem 2"
+                    "Part 1",
+                    "Part 2"
                 ));
+            if (parts.Contains("Part 1"))
+            {
+                partsToRun &= Settings.Parts.Part1;
+            }
+            if (parts.Contains("Part 2"))
+            {
+                partsToRun &= Settings.Parts.Part2;
+            }
 
             string filePath = string.Empty;
             while (true)
@@ -78,12 +122,7 @@ namespace AdventOfCode
             return new Settings()
             {
                 Day = day,
-                Problem = problem switch
-                {
-                    "Problem 1" => PuzzlePart.Part1,
-                    "Problem 2" => PuzzlePart.Part2,
-                    _ => throw new NotSupportedException()
-                },
+                Part = partsToRun,
                 File = filePath
             };
         }
@@ -94,9 +133,9 @@ namespace AdventOfCode
             [CommandArgument(0, "[day]")]
             public int? Day { get; init; }
 
-            [Description("The specific problem of the puzzle to solve (either \"Problem1\" or \"Problem2\"). If omitted, both problems will be outputted.")]
-            [CommandArgument(1, "[problem]")]
-            public PuzzlePart? Problem { get; init; }
+            [Description("The specific part of the puzzle to solve.")]
+            [CommandArgument(1, "[part]")]
+            public Parts? Part { get; init; }
 
             [Description("The path to the input file that should be used for solving the puzzle/problem. If omitted, it is assumed that the input will come from STDIN.")]
             [CommandArgument(2, "[input]")]
@@ -114,12 +153,20 @@ namespace AdventOfCode
 
             public override ValidationResult Validate()
             {
-                if (!Interactive && (Day == null || Problem == null || File == null))
+                if (!Interactive && (Day == null || Part == null || File == null))
                 {
-                    return ValidationResult.Error( "The day, problem, and input arguments are required when --interactive isn't passed.");
+                    return ValidationResult.Error( "The day, part, and input arguments are required when --interactive isn't passed.");
                 }
 
                 return ValidationResult.Success();
+            }
+
+            public enum Parts
+            {
+                None = 0,
+                Part1 = (1 << 0),
+                Part2 = (1 << 1),
+                All = Part1 | Part2
             }
         }
     }

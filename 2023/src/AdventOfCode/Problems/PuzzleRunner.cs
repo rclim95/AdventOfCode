@@ -13,7 +13,14 @@ namespace AdventOfCode.Problems
     /// </summary>
     internal enum PuzzlePart
     {
+        /// <summary>
+        /// Part 1 should be executed.
+        /// </summary>
         Part1 = 1,
+
+        /// <summary>
+        /// Part 2 should be executed.
+        /// </summary>
         Part2 = 2
     }
 
@@ -42,29 +49,30 @@ namespace AdventOfCode.Problems
         public IReadOnlyCollection<int> Days => _puzzles.Select(p => p.Day).ToList();
 
         /// <summary>
-        /// Solves a problem for a particular day.
+        /// Solves a specific part of the puzzle for a particular day.
         /// </summary>
         /// <param name="day">The particular day.</param>
-        /// <param name="part">The particular problem.</param>
-        /// <param name="inputFile">The input file that should be passed to the problem to solve.</param>
-        public void Solve(int day, PuzzlePart part, TextReader inputFile)
+        /// <param name="part">The particular part.</param>
+        /// <param name="inputFile">The input file that should be passed to the part to solve.</param>
+        /// <returns>The output of the part.</returns>
+        public string Run(int day, PuzzlePart part, StreamReader inputFile)
         {
             var selectedPuzzle = _puzzles.FirstOrDefault(p => p.Day == day);
             if (selectedPuzzle == null)
             {
-                AnsiConsole.MarkupLineInterpolated($"[bold red]ERROR:[/] Day {day} does not exist.");
-                return;
+                throw new ArgumentException($"Day {day} is not supported.", nameof(day));
             }
 
             switch (part)
             {
                 case PuzzlePart.Part1:
-                    AnsiConsole.MarkupLineInterpolated($"[bold]Day {day}, Part 1 Answer:[/] {selectedPuzzle.Part1(inputFile)}");
-                    break;
+                    return selectedPuzzle.Part1(inputFile);
 
                 case PuzzlePart.Part2:
-                    AnsiConsole.MarkupLineInterpolated($"[bold]Day {day}, Part 2 Answer:[/] {selectedPuzzle.Part2(inputFile)}");
-                    break;
+                    return selectedPuzzle.Part2(inputFile);
+
+                default:
+                    throw new ArgumentException($"Part {part} is not supported.", nameof(part));
             }
         }
 
@@ -72,8 +80,8 @@ namespace AdventOfCode.Problems
         {
             _puzzles.Add(new PuzzleRecord(
                 TPuzzle.Day,
-                (reader) => TPuzzle.GetPart1Answer(reader),
-                (reader) => TPuzzle.GetPart2Answer(reader)
+                TPuzzle.GetPart1Answer,
+                TPuzzle.GetPart2Answer
             ));
         }
     }

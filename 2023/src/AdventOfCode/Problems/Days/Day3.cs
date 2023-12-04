@@ -13,7 +13,7 @@ namespace AdventOfCode.Problems.Days
         public static int Day => 3;
 
         /// <inheritdoc />
-        public static string GetPart1Answer(TextReader reader)
+        public static string GetPart1Answer(StreamReader reader)
         {
             int sumOfPartNumbers = 0;
             List<string> schematicLines = ReadLinesIntoList(reader);
@@ -86,7 +86,7 @@ namespace AdventOfCode.Problems.Days
             return sumOfPartNumbers.ToString();
         }
 
-        public static string GetPart2Answer(TextReader reader)
+        public static string GetPart2Answer(StreamReader reader)
         {
             int sumOfGearRatios = 0;
             List<string> schematicLines = ReadLinesIntoList(reader);
@@ -165,7 +165,7 @@ namespace AdventOfCode.Problems.Days
             return sumOfGearRatios.ToString();
         }
 
-        private static List<string> ReadLinesIntoList(TextReader reader)
+        private static List<string> ReadLinesIntoList(StreamReader reader)
         {
             List<string> lines = [];
             while (true)
