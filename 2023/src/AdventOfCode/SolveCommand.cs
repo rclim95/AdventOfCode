@@ -137,7 +137,7 @@ namespace AdventOfCode
             [CommandArgument(1, "[part]")]
             public Parts? Part { get; init; }
 
-            [Description("The path to the input file that should be used for solving the puzzle/problem. If omitted, it is assumed that the input will come from STDIN.")]
+            [Description("The path to the input file that should be used for solving the puzzle/problem.")]
             [CommandArgument(2, "[input]")]
             public string? File { get; init; }
 
