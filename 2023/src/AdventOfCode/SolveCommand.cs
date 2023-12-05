@@ -34,18 +34,23 @@ namespace AdventOfCode
                 using StreamReader reader = File.OpenText(settings.File!);
                 if (settings.Part!.Value.HasFlag(Settings.Parts.Part1))
                 {
+                    var stopwatch = new Stopwatch();
                     try
                     {
+                        stopwatch.Start();
                         string result = runner.Run(settings.Day!.Value, PuzzlePart.Part1, reader);
-                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 1 Answer: :check_mark:  [bold]{result}[/]");
+                        stopwatch.Stop();
+
+                        AnsiConsole.MarkupLineInterpolated($"Day {settings.Day}, Part 1 Answer: :check_mark:  [bold]{result}[/]");
+                        AnsiConsole.MarkupLineInterpolated($"> :timer_clock:  Execution Time: {stopwatch.Elapsed.TotalMilliseconds:0.00}ms");
                     }
                     catch (NotImplementedException)
                     {
-                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 1 Answer: :warning:  [bold red]Not Implemented[/]");
+                        AnsiConsole.MarkupLineInterpolated($"Day {settings.Day}, Part 1 Answer: :warning:  [bold red]Not Implemented[/]");
                     }
                     catch (Exception ex)
                     {
-                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 1 Answer: :cross_mark: [bold red]Error[/]");
+                        AnsiConsole.MarkupLineInterpolated($"Day {settings.Day}, Part 1 Answer: :cross_mark: [bold red]Error[/]");
                         AnsiConsole.WriteException(ex);
                     }
                 }
@@ -57,18 +62,23 @@ namespace AdventOfCode
                     reader.BaseStream.Position = 0;
                     reader.DiscardBufferedData();
 
+                    var stopwatch = new Stopwatch();
                     try
                     {
+                        stopwatch.Start();
                         string result = runner.Run(settings.Day!.Value, PuzzlePart.Part2, reader);
-                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 2 Answer: :check_mark:  [bold]{result}[/]");
+                        stopwatch.Stop();
+
+                        AnsiConsole.MarkupLineInterpolated($"Day {settings.Day}, Part 2 Answer: :check_mark:  [bold]{result}[/]");
+                        AnsiConsole.MarkupLineInterpolated($"> :timer_clock:  Execution Time: {stopwatch.Elapsed.TotalMilliseconds:0.00}ms");
                     }
                     catch (NotImplementedException)
                     {
-                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 2 Answer: :warning:  [bold red]Not Implemented[/]");
+                        AnsiConsole.MarkupLineInterpolated($"Day {settings.Day}, Part 2 Answer: :warning:  [bold red]Not Implemented[/]");
                     }
                     catch (Exception ex)
                     {
-                        AnsiConsole.MarkupLineInterpolated($"> Day {settings.Day}, Part 2 Answer: :cross_mark:  [bold red]Error[/]");
+                        AnsiConsole.MarkupLineInterpolated($"Day {settings.Day}, Part 2 Answer: :cross_mark:  [bold red]Error[/]");
                         AnsiConsole.WriteException(ex);
                     }
                 }

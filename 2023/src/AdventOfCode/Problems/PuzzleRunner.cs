@@ -41,6 +41,7 @@ namespace AdventOfCode.Problems
             RegisterPuzzle<Day1>();
             RegisterPuzzle<Day2>();
             RegisterPuzzle<Day3>();
+            RegisterPuzzle<Day4>();
         }
 
         /// <summary>
