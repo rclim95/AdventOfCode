@@ -1,18 +1,25 @@
-﻿using AdventOfCode.Problems;
+﻿// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) rclim95.
+//
+// Licensed under the MIT License. For more info, see the LICENSE.md at the root of this repo.
+// </copyright>
+
 using Spectre.Console.Cli;
 
-namespace AdventOfCode
+namespace AdventOfCode;
+
+/// <summary>
+/// Provides the main entry point for the app.
+/// </summary>
+internal class Program
 {
-    internal class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
+        var app = new CommandApp<SolveCommand>();
+        app.Configure(config =>
         {
-            var app = new CommandApp<SolveCommand>();
-            app.Configure(config =>
-            {
-                app.WithDescription("Run a specific problem for an Advent of Code 2023 puzzle using a specific input file.");
-            });
-            app.Run(args);
-        }
+            app.WithDescription("Run a specific problem for an Advent of Code 2023 puzzle using a specific input file.");
+        });
+        app.Run(args);
     }
 }

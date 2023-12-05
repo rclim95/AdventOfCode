@@ -1,0 +1,8 @@
+﻿{
+    "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+    "settings": {
+        "documentationRules": {
+            "copyrightText": "Copyright (c) rclim95.\n\nLicensed under the MIT License. For more info, see the LICENSE.md at the root of this repo."
+        }
+    }
+}
