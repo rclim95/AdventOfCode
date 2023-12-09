@@ -37,7 +37,7 @@ internal sealed class PuzzleRunner
     /// </summary>
     public PuzzleRunner()
     {
-        _puzzles = new List<PuzzleRecord>();
+        _puzzles = [];
 
         RegisterPuzzle<Day1>();
         RegisterPuzzle<Day2>();
@@ -47,6 +47,7 @@ internal sealed class PuzzleRunner
         RegisterPuzzle<Day6>();
         RegisterPuzzle<Day7>();
         RegisterPuzzle<Day8>();
+        RegisterPuzzle<Day9>();
     }
 
     /// <summary>
