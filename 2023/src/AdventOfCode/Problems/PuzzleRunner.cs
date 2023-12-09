@@ -46,6 +46,7 @@ internal sealed class PuzzleRunner
         RegisterPuzzle<Day5>();
         RegisterPuzzle<Day6>();
         RegisterPuzzle<Day7>();
+        RegisterPuzzle<Day8>();
     }
 
     /// <summary>
