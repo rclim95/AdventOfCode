@@ -366,7 +366,6 @@ internal class Day07 : IPuzzle
             .Select(i => (long)i.Bid * i.Rank)
             .Sum()
             .ToString();
-
     }
 
     private static IEnumerable<(Hand Hand, int Bid)> GetHandAndBids(TextReader reader, bool hasJokers = false)

@@ -34,13 +34,30 @@ internal sealed class SolveCommand : Command<SolveCommand.Settings>
                 settings = PromptForArgumentsFromUser(runner);
             }
 
-            // NB: These can't possibly be null, as this will be provided either in interaction
-            // mode or on the command line args. The command line args will be validated so that
-            // the day, problem, and (input) file are provided if the app isn't running in
-            // interactive mode. :)
-            using StreamReader reader = File.OpenText(settings.File!);
+            // Did the user specify a file?
+            string input = string.Empty;
+            if (string.IsNullOrEmpty(settings.File))
+            {
+                // They haven't, so get the input file containing the input string from standard input.
+                AnsiConsole.MarkupLine(
+                    "[grey][bold]Note:[/] STDIN is being used to get the input for this puzzle. " +
+                    "Paste in your input file, and and press CTRL+D/CTRL+Z on its own line when you are done.[/]");
+                input = Console.In.ReadToEnd();
+            }
+            else
+            {
+                // They have, so read the file at the designated path.
+                //
+                // NB: These can't possibly be null, as this will be provided either in interaction
+                // mode or on the command line args. The command line args will be validated so that
+                // the day, problem, and (input) file are provided if the app isn't running in
+                // interactive mode. :)
+                input = File.ReadAllText(settings.File!);
+            }
+
             if (settings.Part!.Value.HasFlag(Settings.Parts.Part1))
             {
+                using StringReader reader = new(input);
                 var stopwatch = new Stopwatch();
                 try
                 {
@@ -64,11 +81,7 @@ internal sealed class SolveCommand : Command<SolveCommand.Settings>
 
             if (settings.Part!.Value.HasFlag(Settings.Parts.Part2))
             {
-                // In case part 1 was executed, reset the stream to the beginning so that the
-                // input file will be read properly.
-                reader.BaseStream.Position = 0;
-                reader.DiscardBufferedData();
-
+                using StringReader reader = new(input);
                 var stopwatch = new Stopwatch();
                 try
                 {
@@ -194,7 +207,7 @@ internal sealed class SolveCommand : Command<SolveCommand.Settings>
         /// <summary>
         /// Gets the path to the input file.
         /// </summary>
-        [Description("The path to the input file that should be used for solving the puzzle/problem.")]
+        [Description("The path to the input file that should be used for solving the puzzle/problem. To retrieve from standard input, leave this blank.")]
         [CommandArgument(2, "[input]")]
         public string? File { get; init; }
 
@@ -217,9 +230,9 @@ internal sealed class SolveCommand : Command<SolveCommand.Settings>
         /// <inheritdoc />
         public override ValidationResult Validate()
         {
-            if (!Interactive && (Day == null || Part == null || File == null))
+            if (!Interactive && (Day == null || Part == null))
             {
-                return ValidationResult.Error( "The day, part, and input arguments are required when --interactive isn't passed.");
+                return ValidationResult.Error( "The day and part arguments are required when --interactive isn't passed.");
             }
 
             return ValidationResult.Success();
