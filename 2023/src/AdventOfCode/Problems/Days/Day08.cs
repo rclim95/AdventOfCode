@@ -18,7 +18,7 @@ internal class Day08 : IPuzzle
     public static int Day => 8;
 
     /// <inheritdoc />
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         // The first line should contain the direction we are supposed to travel (and cycle through
         // if we reached the end).
@@ -53,7 +53,7 @@ internal class Day08 : IPuzzle
     }
 
     /// <inheritdoc />
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         // The first line should contain the direction we are supposed to travel (and cycle through
         // if we reached the end).
@@ -125,7 +125,7 @@ internal class Day08 : IPuzzle
         return currentStep.ToString();
     }
 
-    private static IDictionary<string, Path> GetNodes(StreamReader reader)
+    private static IDictionary<string, Path> GetNodes(TextReader reader)
     {
         Dictionary<string, Path> nodes = new();
 

@@ -5,7 +5,6 @@
 // </copyright>
 
 using Spectre.Console;
-using AdventOfCode.Problems.Days;
 
 namespace AdventOfCode.Problems;
 
@@ -62,7 +61,7 @@ internal sealed class PuzzleRunner
     /// <param name="part">The particular part.</param>
     /// <param name="inputFile">The input file that should be passed to the part to solve.</param>
     /// <returns>The output of the part.</returns>
-    public string Run(int day, PuzzlePart part, StreamReader inputFile)
+    public string Run(int day, PuzzlePart part, TextReader inputFile)
     {
         var selectedPuzzle = _puzzles.FirstOrDefault(p => p.Day == day);
         if (selectedPuzzle == null)

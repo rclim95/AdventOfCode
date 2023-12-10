@@ -18,7 +18,7 @@ internal class Day05 : IPuzzle
     public static int Day => 5;
 
     /// <inheritdoc />
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         // The first line should contain the seeds that we're mapping. The line should be
         // in the format of the following:
@@ -59,7 +59,7 @@ internal class Day05 : IPuzzle
     }
 
     /// <inheritdoc />
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         // Surprise! The first line is actually describing a seed range! The first number is the starting
         // seed number and the second number after it is the length of the range.

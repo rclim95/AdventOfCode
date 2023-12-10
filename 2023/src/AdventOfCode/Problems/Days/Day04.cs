@@ -18,7 +18,7 @@ internal sealed class Day04 : IPuzzle
     public static int Day => 4;
 
     /// <inheritdoc />
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         int sumOfPoints = 0;
         while (true)
@@ -41,7 +41,7 @@ internal sealed class Day04 : IPuzzle
     }
 
     /// <inheritdoc />
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         Dictionary<int, int> cardToCopiesCount = new();
 

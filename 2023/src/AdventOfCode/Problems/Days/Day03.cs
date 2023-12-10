@@ -17,7 +17,7 @@ internal sealed partial class Day03 : IPuzzle
     public static int Day => 3;
 
     /// <inheritdoc />
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         int sumOfPartNumbers = 0;
         List<string> schematicLines = ReadLinesIntoList(reader);
@@ -91,7 +91,7 @@ internal sealed partial class Day03 : IPuzzle
     }
 
     /// <inheritdoc />
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         int sumOfGearRatios = 0;
         List<string> schematicLines = ReadLinesIntoList(reader);
@@ -170,7 +170,7 @@ internal sealed partial class Day03 : IPuzzle
         return sumOfGearRatios.ToString();
     }
 
-    private static List<string> ReadLinesIntoList(StreamReader reader)
+    private static List<string> ReadLinesIntoList(TextReader reader)
     {
         List<string> lines = [];
         while (true)

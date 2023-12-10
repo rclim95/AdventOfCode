@@ -15,7 +15,7 @@ internal class Day06 : IPuzzle
     public static int Day => 6;
 
     /// <inheritdoc />
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         IEnumerable<RaceStats> races = GetRaceStats(reader);
         int runningProduct = 1;
@@ -78,7 +78,7 @@ internal class Day06 : IPuzzle
     }
 
     /// <inheritdoc />
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         // For Part 2, apparently those spaces should be ignored (bad kerning added spaces that
         // shouldn't have been interpreted as so). The rest of the problem is the same though, so
@@ -99,7 +99,7 @@ internal class Day06 : IPuzzle
         return ((maxHold - minHold) + 1).ToString();
     }
 
-    private static IEnumerable<RaceStats> GetRaceStats(StreamReader reader)
+    private static IEnumerable<RaceStats> GetRaceStats(TextReader reader)
     {
         // The input files is basically two lines: the first line contains the duration of the
         // race and the second line contains the record distance of the race. Therefore, read in

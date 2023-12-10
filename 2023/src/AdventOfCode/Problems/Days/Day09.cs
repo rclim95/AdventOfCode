@@ -16,7 +16,7 @@ internal class Day09 : IPuzzle
     /// <inheritdoc />
     public static int Day => 9;
 
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         int sumOfExtrapolatedValues = 0;
         foreach (int[] historicalValue in GetHistoricalValues(reader))
@@ -56,7 +56,7 @@ internal class Day09 : IPuzzle
         return sumOfExtrapolatedValues.ToString();
     }
 
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         int sumOfExtrapolatedValues = 0;
         foreach (int[] historicalValue in GetHistoricalValues(reader))
@@ -105,7 +105,7 @@ internal class Day09 : IPuzzle
         return sumOfExtrapolatedValues.ToString();
     }
 
-    private static IEnumerable<int[]> GetHistoricalValues(StreamReader reader)
+    private static IEnumerable<int[]> GetHistoricalValues(TextReader reader)
     {
         while (true)
         {

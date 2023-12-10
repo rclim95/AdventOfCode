@@ -15,7 +15,7 @@ internal sealed class Day01 : IPuzzle
     public static int Day => 1;
 
     /// <inheritdoc />
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         int sum = 0;
         while (true)
@@ -40,7 +40,7 @@ internal sealed class Day01 : IPuzzle
     }
 
     /// <inheritdoc />
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         int sum = 0;
         while (true)

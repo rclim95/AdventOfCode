@@ -329,7 +329,7 @@ internal class Day07 : IPuzzle
     public static int Day => 7;
 
     /// <inheritdoc />
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         List<(Hand Hand, int Bid)> handAndBids = GetHandAndBids(reader).ToList();
 
@@ -350,7 +350,7 @@ internal class Day07 : IPuzzle
     }
 
     /// <inheritdoc />
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         // In a twist of events, the "J" in this part of the problem can be jokers! Jokers can
         // convert themselves to other cards that increases the strength of a deck (i.e., the hand type)

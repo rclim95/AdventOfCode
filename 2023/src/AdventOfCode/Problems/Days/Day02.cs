@@ -15,7 +15,7 @@ internal sealed class Day02 : IPuzzle
     public static int Day => 2;
 
     /// <inheritdoc />
-    public static string GetPart1Answer(StreamReader reader)
+    public static string GetPart1Answer(TextReader reader)
     {
         const int MaximumRedCube = 12;
         const int MaximumGreenCube = 13;
@@ -49,7 +49,7 @@ internal sealed class Day02 : IPuzzle
     }
 
     /// <inheritdoc />
-    public static string GetPart2Answer(StreamReader reader)
+    public static string GetPart2Answer(TextReader reader)
     {
         int sumOfPowers = 0;
         foreach (var game in GetGames(reader))
@@ -78,7 +78,7 @@ internal sealed class Day02 : IPuzzle
         return sumOfPowers.ToString();
     }
 
-    private static IEnumerable<Game> GetGames(StreamReader reader)
+    private static IEnumerable<Game> GetGames(TextReader reader)
     {
         while (true)
         {
