@@ -4,10 +4,10 @@
 // Licensed under the MIT License. For more info, see the LICENSE.md at the root of this repo.
 // </copyright>
 
-using AdventOfCode.Problems.Days;
-using static AdventOfCode.Problems.Days.Hand;
+using AdventOfCode.Problems.Days.Day07;
+using static AdventOfCode.Problems.Days.Day07.Hand;
 
-namespace AdventOfCode.Tests.Day7;
+namespace AdventOfCode.Tests.Day07;
 
 public class HandTests
 {

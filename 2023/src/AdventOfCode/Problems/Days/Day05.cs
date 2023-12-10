@@ -7,12 +7,12 @@ using System.Text.RegularExpressions;
 using Spectre.Console;
 using InputRule = (long Start, long End, long Offset);
 
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day05;
 
 /// <summary>
 /// Provides the solution for Day 5 of Advent of Code.
 /// </summary>
-internal class Day5 : IPuzzle
+internal class Day05 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 5;

@@ -4,12 +4,12 @@
 // Licensed under the MIT License. For more info, see the LICENSE.md at the root of this repo.
 // </copyright>
 
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day01;
 
 /// <summary>
 /// Provides the solution for Day 1 of Advent of Code.
 /// </summary>
-internal sealed class Day1 : IPuzzle
+internal sealed class Day01 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 1;
@@ -60,7 +60,7 @@ internal sealed class Day1 : IPuzzle
             int firstDigit = FindFirstDigit(currentLine);
             int lastDigit = FindLastDigit(currentLine);
 
-            sum += (firstDigit * 10) + lastDigit;
+            sum += firstDigit * 10 + lastDigit;
         }
 
         return sum.ToString();
@@ -197,7 +197,7 @@ internal sealed class Day1 : IPuzzle
         // given the string "hello" and endIndex is 4, if substring is "ello", it would be
         // a match because "ello" starts at 1 and ends at 4), we need to figure out the
         // supposed starting index.
-        int startIndex = (endIndex + 1) - substring.Length;
+        int startIndex = endIndex + 1 - substring.Length;
         if (startIndex < 0)
         {
             // This definitely can't be a match--the substring would be too long to match the

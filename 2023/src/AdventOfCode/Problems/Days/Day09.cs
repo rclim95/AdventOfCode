@@ -4,16 +4,14 @@
 // Licensed under the MIT License. For more info, see the LICENSE.md at the root of this repo.
 // </copyright>
 
-
-using System.Reflection.Metadata.Ecma335;
 using MoreLinq;
 
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day09;
 
 /// <summary>
 /// Implements the solution for solving Day 9 of Advent of Code.
 /// </summary>
-internal class Day9 : IPuzzle
+internal class Day09 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 9;

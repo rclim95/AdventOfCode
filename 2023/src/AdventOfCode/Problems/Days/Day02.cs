@@ -4,12 +4,12 @@
 // Licensed under the MIT License. For more info, see the LICENSE.md at the root of this repo.
 // </copyright>
 
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day02;
 
 /// <summary>
 /// Provides the solution for Day 2 of Advent of Code.
 /// </summary>
-internal sealed class Day2 : IPuzzle
+internal sealed class Day02 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 2;

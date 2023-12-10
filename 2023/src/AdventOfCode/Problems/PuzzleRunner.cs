@@ -4,8 +4,8 @@
 // Licensed under the MIT License. For more info, see the LICENSE.md at the root of this repo.
 // </copyright>
 
-using AdventOfCode.Problems.Days;
 using Spectre.Console;
+using AdventOfCode.Problems.Days;
 
 namespace AdventOfCode.Problems;
 
@@ -39,15 +39,15 @@ internal sealed class PuzzleRunner
     {
         _puzzles = [];
 
-        RegisterPuzzle<Day1>();
-        RegisterPuzzle<Day2>();
-        RegisterPuzzle<Day3>();
-        RegisterPuzzle<Day4>();
-        RegisterPuzzle<Day5>();
-        RegisterPuzzle<Day6>();
-        RegisterPuzzle<Day7>();
-        RegisterPuzzle<Day8>();
-        RegisterPuzzle<Day9>();
+        RegisterPuzzle<Days.Day01.Day01>();
+        RegisterPuzzle<Days.Day02.Day02>();
+        RegisterPuzzle<Days.Day03.Day03>();
+        RegisterPuzzle<Days.Day04.Day04>();
+        RegisterPuzzle<Days.Day05.Day05>();
+        RegisterPuzzle<Days.Day06.Day06>();
+        RegisterPuzzle<Days.Day07.Day07>();
+        RegisterPuzzle<Days.Day08.Day08>();
+        RegisterPuzzle<Days.Day09.Day09>();
     }
 
     /// <summary>

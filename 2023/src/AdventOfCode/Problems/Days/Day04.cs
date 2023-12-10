@@ -7,12 +7,12 @@
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day04;
 
 /// <summary>
 /// Provides the solution for Day 4 of Advent of Code.
 /// </summary>
-internal sealed class Day4 : IPuzzle
+internal sealed class Day04 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 4;

@@ -7,7 +7,7 @@
 using System.Diagnostics;
 using System.Linq;
 
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day07;
 
 /// <summary>
 /// Represents a hand for the game of Camel Cards.
@@ -323,7 +323,7 @@ public sealed class Hand : IComparable<Hand>
 /// <summary>
 /// Implements the solution for Day 7 of Advent of Code.
 /// </summary>
-internal class Day7 : IPuzzle
+internal class Day07 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 7;

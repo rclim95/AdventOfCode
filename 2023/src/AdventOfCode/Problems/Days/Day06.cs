@@ -4,14 +4,12 @@
 // Licensed under the MIT License. For more info, see the LICENSE.md at the root of this repo.
 // </copyright>
 
-using System.Diagnostics;
-
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day06;
 
 /// <summary>
 /// Implements the solutions for Day 6 of Advent of Code.
 /// </summary>
-internal class Day6 : IPuzzle
+internal class Day06 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 6;

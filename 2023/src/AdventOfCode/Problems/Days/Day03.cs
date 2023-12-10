@@ -6,12 +6,12 @@
 
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day03;
 
 /// <summary>
 /// Provides the solution for Day 3 of Advent of Code.
 /// </summary>
-internal sealed partial class Day3 : IPuzzle
+internal sealed partial class Day03 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 3;

@@ -7,12 +7,12 @@
 using System.Text.RegularExpressions;
 using Path = (string Left, string Right);
 
-namespace AdventOfCode.Problems.Days;
+namespace AdventOfCode.Problems.Days.Day08;
 
 /// <summary>
 /// Implements the solution for Day 8 of Advent of Code.
 /// </summary>
-internal class Day8 : IPuzzle
+internal class Day08 : IPuzzle
 {
     /// <inheritdoc />
     public static int Day => 8;
