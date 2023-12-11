@@ -126,7 +126,105 @@ internal class Day10 : IPuzzle
     /// <inheritdoc />
     public static string GetPart2Answer(TextReader reader)
     {
-        throw new NotImplementedException();
+        // Read the entire input file (representing our pipe map) into a list
+        // as we're going to need to traverse through this entire map to understand the big picture.
+        (int startX, int startY) = (0, 0);
+        List<string> mapLines = new(200);
+        while (true)
+        {
+            string? currentLine = reader.ReadLine();
+            if (currentLine == null)
+            {
+                break;
+            }
+
+            mapLines.Add(currentLine);
+
+            // Does this line have the start position?
+            int indexOfS = currentLine.IndexOf('S');
+            if (indexOfS >= 0)
+            {
+                // Yep, it does--record this start position. It'll become important later, as we're
+                // going to need to figure out what kind of pipe the animal is in by inferring its
+                // surrounding.
+                (startX, startY) = (indexOfS, mapLines.Count - 1);
+            }
+        }
+
+        // Figure out the start pipe based on the (StartX, StartY) provided and see where we can "exit".
+        // We'll look at the first exit (although we could take the second one, as well). Once we do that,
+        // travel through it and collect all the (X, Y) coordinates that involve a pipe in the network.
+        Pipe startPipe = new(mapLines, startX, startY);
+        List<(PipeType Type, int X, int Y)> pipeNetwork = [(startPipe.Type, startPipe.X, startPipe.Y)];
+        (Pipe currentPipe, Direction entrance) = startPipe.GetExits()[0];
+        while (currentPipe != startPipe)
+        {
+            pipeNetwork.Add((currentPipe.Type, currentPipe.X, currentPipe.Y));
+            (currentPipe, entrance) = currentPipe.Enter(entrance);
+        }
+
+        // Sort the pipes by line and then their X position for optimization purposes (i.e.,
+        // helps us make use of SkipWhile/TakeWhile later).
+        pipeNetwork = pipeNetwork.OrderBy(p => p.Y).ThenBy(p => p.X).ToList();
+
+        int pointsInside = 0;
+        for (int i = 0; i < mapLines.Count; i++)
+        {
+            // Get the current line and get the pipes that's part of the cycle that's in this line.
+            string currentLine = mapLines[i];
+            List<(PipeType Type, int X, int Y)> pipesForThisLine = pipeNetwork
+                .SkipWhile(p => p.Y != i)
+                .TakeWhile(p => p.Y == i)
+                .ToList();
+
+            // Hints from reddit: Given the fact that the pipe can be considered a polygon (it'
+            // closed, and it's composed of lines), use the even/odd rule to figure out whether
+            // a point is within our pipe polygon or outside of it as follow).
+            //
+            // The rule works as follow:
+            // - Place a line inside or outside the polygon in question and shoot it to the end.
+            // - Count the number of intersections (pipes) that this line crosses to the end.
+            //   - An even number of lines indicates the point is outside the polygon.
+            //   - An odd number of lines indicates the point is inside the polygon.
+            for (int j = 0; j < pipesForThisLine.Count - 1; j++)
+            {
+                // Does a pipe exists next to this pipe? If so, skip.
+                if (pipesForThisLine[j + 1].X == pipesForThisLine[j].X + 1)
+                {
+                    continue;
+                }
+
+                // The pipe at pipesForThisLine[j].X + 1 is a pipe that _isn't_ part of our cycle/polygon.
+                // Calculate the number of pipes we would have crossed, starting from this pipe that is
+                // part of our polygon and has a gap.
+                //
+                // NB: We only only care about pipes in our polygon that have an entrance from the
+                // north. Given the fact that we're scanning from top to bottom, when we come across
+                // a pipe in our polygon that has a north exit, we know _eventually_ there must be
+                // another north entrance further along in pipesForThisLine so that our polygon is
+                // connected (what goes up must come down). Keep repeating this for additional north pairs.
+                //
+                // As for our south joints, we know that in the next line, there _must_ be a north pipe
+                // that is connecting to it from the bottom (either a vertical pipe, a north-east joint,
+                // or a north-west joint). Therefore, we don't need to worry about processing south-facing
+                // pipes.
+                //
+                // This comment from /u/Nahadhar explains it succinctly:
+                // https://www.reddit.com/r/adventofcode/comments/18fgddy/comment/kcut9ya
+                int numberOfPipesCrossed = pipesForThisLine.Skip(j + 1).Count(p => p.Type is PipeType.NorthWest or PipeType.NorthEast or PipeType.Vertical);
+                if (numberOfPipesCrossed % 2 == 0)
+                {
+                    // Outside the polygon, continue.
+                    continue;
+                }
+
+                // We're inside the polygon. Figure out how many points exists here by looking
+                // at the next pipe we would need to process.
+                pointsInside += pipesForThisLine[j + 1].X - pipesForThisLine[j].X - 1;
+            }
+        }
+
+        return pointsInside.ToString();
     }
 }
 
