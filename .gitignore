@@ -20,3 +20,7 @@
 !.vscode/*.code-snippets
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
+
+# Do not include any suspicious-looking text file that may resemble an input
+# See: https://adventofcode.com/2023/about#faq_copying
+*.txt
