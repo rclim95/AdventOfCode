@@ -6,10 +6,16 @@ import com.github.ajalt.clikt.parameters.options.help
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.prompt
 import com.github.ajalt.clikt.parameters.types.choice
+import com.github.ajalt.clikt.parameters.types.file
+import com.github.ajalt.clikt.parameters.types.inputStream
 import com.github.ajalt.clikt.parameters.types.int
+import java.io.InputStream
 import java.util.Scanner
 
 class RunCommand : CliktCommand() {
+    val input: InputStream by option()
+        .inputStream()
+        .prompt("Where is your input file located", promptSuffix = "? ")
     val day: Int by option().int()
         .prompt("Which day would you like to run", promptSuffix = "? ")
         .help("The day that should be run.")
@@ -30,7 +36,7 @@ class RunCommand : CliktCommand() {
         require(solution != null)
 
         // Create a scanner for the provided answer
-        val scanner = Scanner(System.`in`)
+        val scanner = Scanner(input)
         val answer = when (part) {
             1 -> solution.runPart1(scanner)
             2 -> solution.runPart2(scanner)
