@@ -6,7 +6,6 @@ import com.github.ajalt.clikt.parameters.options.help
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.prompt
 import com.github.ajalt.clikt.parameters.types.choice
-import com.github.ajalt.clikt.parameters.types.file
 import com.github.ajalt.clikt.parameters.types.inputStream
 import com.github.ajalt.clikt.parameters.types.int
 import solutions.Day1Solution
@@ -38,7 +37,7 @@ class RunCommand : CliktCommand() {
         require(solution != null)
 
         // Create a scanner for the provided answer
-        val scanner = Scanner(input)
+        val scanner = solution.createScanner(input)
         val answer = when (part) {
             1 -> solution.runPart1(scanner)
             2 -> solution.runPart2(scanner)
