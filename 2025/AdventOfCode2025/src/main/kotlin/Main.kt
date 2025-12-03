@@ -9,6 +9,7 @@ import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.inputStream
 import com.github.ajalt.clikt.parameters.types.int
 import solutions.Day1Solution
+import solutions.Day2Solution
 import java.io.InputStream
 import java.util.Scanner
 
@@ -26,7 +27,8 @@ class RunCommand : CliktCommand() {
     companion object {
         private fun solutions(): List<DaySolution> = listOf(
             Day0Solution,
-            Day1Solution
+            Day1Solution,
+            Day2Solution
         )
     }
 
