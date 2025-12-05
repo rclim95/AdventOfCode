@@ -135,6 +135,6 @@ object Day3Solution : DaySolution {
 /**
  * Encapsulates a battery in a bank.
  * @param digit The digit that this battery have.
- * @param index The index that this battery was found in the current bank being processed..
+ * @param index The index that this battery was found in the current bank being processed.
  */
-data class Battery(val digit: Int, val index: Int);
+private data class Battery(val digit: Int, val index: Int);
