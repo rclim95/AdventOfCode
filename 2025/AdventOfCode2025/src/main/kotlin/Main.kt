@@ -11,6 +11,7 @@ import com.github.ajalt.clikt.parameters.types.int
 import solutions.Day1Solution
 import solutions.Day2Solution
 import solutions.Day3Solution
+import solutions.Day4Solution
 import java.io.InputStream
 import java.util.Scanner
 
@@ -30,7 +31,8 @@ class RunCommand : CliktCommand() {
             Day0Solution,
             Day1Solution,
             Day2Solution,
-            Day3Solution
+            Day3Solution,
+            Day4Solution
         )
     }
 
