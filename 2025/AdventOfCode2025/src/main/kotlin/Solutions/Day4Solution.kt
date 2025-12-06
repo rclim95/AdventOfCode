@@ -61,7 +61,60 @@ object Day4Solution : DaySolution {
     }
 
     override fun runPart2(input: Scanner): String {
-        TODO()
+        // Read the entire input into a list, as we'll need to be able to access it in memory to do some
+        // adjacency checks.
+        val rows = readMutableMap(input)
+
+        // Each "@" represents a roll of paper. "." represents empty space. The forklift can only access "@" if
+        // there are less than four rolls of paper adjacent to it. If the toilet paper is near the map's boundary such
+        // that trying to access outside the boundary would lead to an "IndexOutOfRangeException", then assume it's
+        // an empty space. With that...
+        //
+        // In Part 2, we're going to remove the roll of papers that are accessible once we have identified them at the
+        // end. Keep doing this until there are no more rolls to remove. :)
+        var totalRemoved = 0
+        while (true) {
+            val accessibleRolls = mutableListOf<Position>()
+            for ((y, cols) in rows.withIndex()) {
+                for ((x, cell) in cols.withIndex()) {
+                    if (cell != '@') {
+                        // Don't care, move on.
+                        continue
+                    }
+
+                    // Determine the 8 positions that should be checked and check them to see if we're blocked
+                    // by other paper rolls.
+                    val positionsToCheck = listOf(
+                        Position(x - 1, y - 1), // Northwest
+                        Position(x, y - 1),     // North
+                        Position(x + 1, y - 1), // Northeast
+                        Position(x - 1, y),     // West
+                        Position(x + 1, y),     // East
+                        Position(x - 1, y + 1), // Southwest
+                        Position(x, y + 1),     // South
+                        Position(x + 1, y + 1)  // Southeast
+                    )
+                    val paperRollTiles = positionsToCheck.count { p -> p.isPaperRoll(rows) }
+                    if (paperRollTiles < 4) {
+                        accessibleRolls.add(Position(x, y))
+                    }
+                }
+            }
+
+            if (accessibleRolls.isEmpty()) {
+                // No more accessible rolls, go ahead and break out.
+                break
+            }
+
+            // Remove the roll of paper that were accessible.
+            for (position in accessibleRolls) {
+                rows[position.y][position.x] = '.'
+            }
+
+            totalRemoved += accessibleRolls.size
+        }
+
+        return totalRemoved.toString()
     }
 }
 
