@@ -12,6 +12,7 @@ import solutions.Day1Solution
 import solutions.Day2Solution
 import solutions.Day3Solution
 import solutions.Day4Solution
+import solutions.Day5Solution
 import java.io.InputStream
 import java.util.Scanner
 
@@ -32,7 +33,8 @@ class RunCommand : CliktCommand() {
             Day1Solution,
             Day2Solution,
             Day3Solution,
-            Day4Solution
+            Day4Solution,
+            Day5Solution
         )
     }
 
