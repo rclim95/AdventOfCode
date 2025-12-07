@@ -13,6 +13,7 @@ import solutions.Day2Solution
 import solutions.Day3Solution
 import solutions.Day4Solution
 import solutions.Day5Solution
+import solutions.Day6Solution
 import java.io.InputStream
 import java.util.Scanner
 
@@ -34,7 +35,8 @@ class RunCommand : CliktCommand() {
             Day2Solution,
             Day3Solution,
             Day4Solution,
-            Day5Solution
+            Day5Solution,
+            Day6Solution
         )
     }
 
@@ -45,14 +47,16 @@ class RunCommand : CliktCommand() {
         require(solution != null)
 
         // Create a scanner for the provided answer
-        val scanner = solution.createScanner(input)
-        val answer = when (part) {
-            1 -> solution.runPart1(scanner)
-            2 -> solution.runPart2(scanner)
-            else -> error("Undefined part: $part")
-        }
+        solution.createScanner(input).use {
+            scanner ->
+                val answer = when (part) {
+                    1 -> solution.runPart1(scanner)
+                    2 -> solution.runPart2(scanner)
+                    else -> error("Undefined part: $part")
+                }
 
-        println("Answer: $answer")
+                println("Answer: $answer")
+        }
     }
 }
 
